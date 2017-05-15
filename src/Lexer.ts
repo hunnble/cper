@@ -5,10 +5,10 @@ export default class Lexer {
   constructor() {
     this.symbols = ['"', "'", '<', '>', '/'];
     this.grammar = [
-      { token: 'self_close_tag', rule: /<([a-zA-Z])+?\s*[^<>]*\/>/ },
-      { token: 'start_tag', rule: /<([a-zA-Z])+?\s*[^<>]*>/ },
-      { token: 'end_tag', rule: /<\/([a-zA-Z])+?\s*[^<>]*>/ },
-      { token: 'comment', rule: /<!--.*-->/ },
+      { token: 'self-closing-tag', rule: /<([a-zA-Z])+?\s*[^<>]*\/>/ },
+      { token: 'start-tag', rule: /<([a-zA-Z])+?\s*[^<>]*>/ },
+      { token: 'end-tag', rule: /<\/([a-zA-Z])+?\s*[^<>]*>/ },
+      { token: 'comment', rule: /<!--.+?-->/ },
       { token: 'string', rule: /[^<>]+/ }
     ];
   }
@@ -25,8 +25,9 @@ export default class Lexer {
     while (line.length > 0) {
       token = { index: line.length };
       for (let i = 0; i < grammarLen; i += 1) {
-        const match: Object = line.match(this.grammar[i]['rule']);
+        let match: Object = line.match(this.grammar[i]['rule']);
         if (!match) continue;
+        match['token'] = this.grammar[i]['token'];
         if (match['index'] < token['index']) {
           token = match;
         } else if (match['index'] === token['index'] && match[0].length < token[0].length) {
@@ -34,7 +35,10 @@ export default class Lexer {
         }
       }
       line = line.substring(token['index'] + token[0].length);
-      token['input'] && tokens.push(token);
+      token['input'] && tokens.push({
+        string: token[0],
+        token: token['token']
+      });
     }
     return tokens;
   }
