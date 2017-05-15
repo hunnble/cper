@@ -5,10 +5,11 @@ export default class Lexer {
   constructor() {
     this.symbols = ['"', "'", '<', '>', '/'];
     this.grammar = [
-      { token: 'self-closing-tag', rule: /<([a-zA-Z])+?\s*[^<>]*\/>/ },
-      { token: 'start-tag', rule: /<([a-zA-Z])+?\s*[^<>]*>/ },
-      { token: 'end-tag', rule: /<\/([a-zA-Z])+?\s*[^<>]*>/ },
+      { token: 'self-closing-tag', rule: /<([a-zA-Z])+\s*([^<>]*(=".*"))*?\s*\/>/ },
+      { token: 'start-tag', rule: /<([a-zA-Z])+\s*([^<>]*(=".*"))*?\s*>/ },
+      { token: 'end-tag', rule: /<\/([a-zA-Z])+\s*>/ },
       { token: 'comment', rule: /<!--.+?-->/ },
+      // TODO: change rule of string, support < and >
       { token: 'string', rule: /[^<>]+/ }
     ];
   }

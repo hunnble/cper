@@ -6,17 +6,26 @@ const lexer = new Lexer();
 
 describe('tokens', () => {
   it('should analyze normal HTML tags', () => {
-    const html = '<div class="classname">burn it all</div>';
-    const tokens = lexer.analyze(html)[0];
+    let html = '<div class="classname">burn it all</div>';
+    let tokens = lexer.analyze(html)[0];
     expect(tokens.length).to.equal(3);
     expect(tokens[0]['string']).to.equal('<div class="classname">');
+    expect(tokens[1]['string']).to.equal('burn it all');
+    expect(tokens[2]['string']).to.equal('</div>');
+    html = '<div onClick="() => 1 < 2">burn it all</div>';
+    tokens = lexer.analyze(html)[0];
+    expect(tokens[0]['string']).to.equal('<div onClick="() => 1 < 2">');
     expect(tokens[1]['string']).to.equal('burn it all');
     expect(tokens[2]['string']).to.equal('</div>');
   });
 
   it('should analyze correct self-closing tags', () => {
-    const html = '<input name="username" />';
-    const tokens = lexer.analyze(html)[0];
+    let html = '<input name="username" />';
+    let tokens = lexer.analyze(html)[0];
+    expect(tokens.length).to.equal(1);
+    expect(tokens[0]['string']).to.equal(html.trim());
+    html = '<input onClick="function() { 1 < 2 }" />';
+    tokens = lexer.analyze(html)[0];
     expect(tokens.length).to.equal(1);
     expect(tokens[0]['string']).to.equal(html.trim());
   });
