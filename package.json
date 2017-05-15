@@ -1,0 +1,22 @@
+{
+  "name": "cper",
+  "version": "0.1.0",
+  "description": "compiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hunnble/md.git"
+  },
+  "keywords": [
+    "compiler"
+  ],
+  "author": "hunnble",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hunnble/md/issues"
+  },
+  "homepage": "https://github.com/hunnble/md#readme"
+}
