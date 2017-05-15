@@ -4,7 +4,7 @@
   "description": "compiler",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register test/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/hunnble/md/issues"
   },
-  "homepage": "https://github.com/hunnble/md#readme"
+  "homepage": "https://github.com/hunnble/md#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.4.1",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.2"
+  }
 }
