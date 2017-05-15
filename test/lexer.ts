@@ -18,13 +18,13 @@ describe('tokens', () => {
     const html = '<input name="username" />';
     const tokens = lexer.analyze(html)[0];
     expect(tokens.length).to.equal(1);
-    expect(tokens[0]['string']).to.equal(html);
+    expect(tokens[0]['string']).to.equal(html.trim());
   });
 
   it('should get comments', () => {
     const html = '<!-- useless words -->';
     const tokens = lexer.analyze(html)[0];
     expect(tokens.length).to.equal(1);
-    expect(tokens[0]['string']).to.equal(html);
+    expect(tokens[0]['string']).to.equal(html.trim());
   });
 });

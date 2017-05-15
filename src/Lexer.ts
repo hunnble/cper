@@ -35,6 +35,7 @@ export default class Lexer {
         }
       }
       line = line.substring(token['index'] + token[0].length);
+      if (!token['input'] || !/\S/.test(token[0])) continue;
       token['input'] && tokens.push({
         string: token[0],
         token: token['token']
