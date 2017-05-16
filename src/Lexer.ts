@@ -8,8 +8,8 @@ export default class Lexer {
       { token: 'start-tag', rule: /<([a-zA-Z])+\s*([^<>"']|"[^"]*"|'[^']*')*?\s*>/ },
       { token: 'end-tag', rule: /<\/([a-zA-Z])+\s*>/ },
       { token: 'comment', rule: /<!--.+?-->/ },
-      // TODO: change rule of string, support <
-      { token: 'string', rule: /[^<>]+|[^<>]*>(?!<[a-zA-Z])*/ }
+      { token: 'string', rule: /[^<>]+|[^<>]*>(?!<[a-zA-Z])*/ },
+      { token: 'unescapedLessThan', rule: /<[^<>"']*</ }
     ];
   }
 
@@ -35,7 +35,25 @@ export default class Lexer {
           token = match;
         }
       }
-      if (!token[0]) throw new Error('catch match');
+
+      if (!token[0].trim()) {
+        if (/^<$/.test(line.replace(/\s/g, ''))) {
+          line = line.trim();
+          token = {
+            token: 'string',
+            index: 0,
+            0: line,
+            input: line
+          };
+        } else {
+          throw new Error('wrong matching');
+        }
+      }
+
+      if (token['token'] === 'unescapedLessThan') {
+        token['token'] = 'string';
+        token[0] = token[0].slice(0, token[0].length - 1);
+      }
       line = line.substring(token['index'] + token[0].length);
 
       if (!token['input'] || !/\S/.test(token[0])) continue;

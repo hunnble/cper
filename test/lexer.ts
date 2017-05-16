@@ -28,6 +28,15 @@ describe('tokens', () => {
     expect(tokens[2]['string']).to.equal('>oh my');
     expect(tokens[3]['string']).to.equal('</div>');
     expect(tokens[4]['string']).to.equal('>');
+
+    html = '<aaa<<div><oh my</div>< ';
+    tokens = lexer.analyze(html)[0];
+    expect(tokens.length).to.equal(5);
+    expect(tokens[0]['string']).to.equal('<aaa<');
+    expect(tokens[1]['string']).to.equal('<div>');
+    expect(tokens[2]['string']).to.equal('<oh my');
+    expect(tokens[3]['string']).to.equal('</div>');
+    expect(tokens[4]['string']).to.equal('<');
   });
 
   it('should analyze correct self-closing tags', () => {
