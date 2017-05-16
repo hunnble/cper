@@ -9,7 +9,7 @@ export default class Lexer {
       { token: 'end-tag', rule: /<\/([a-zA-Z])+\s*>/ },
       { token: 'comment', rule: /<!--.+?-->/ },
       // TODO: change rule of string, support <
-      { token: 'string', rule: /[^<>]+|[^<>]*>(?!<[a-zA-Z])*|<(?=<)/ }
+      { token: 'string', rule: /[^<>]+|[^<>]*>(?!<[a-zA-Z])*/ }
     ];
   }
 
@@ -35,6 +35,7 @@ export default class Lexer {
           token = match;
         }
       }
+      if (!token[0]) throw new Error('catch match');
       line = line.substring(token['index'] + token[0].length);
 
       if (!token['input'] || !/\S/.test(token[0])) continue;
