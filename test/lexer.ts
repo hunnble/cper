@@ -4,7 +4,7 @@ import Lexer from '../src/Lexer';
 
 const lexer = new Lexer();
 
-describe('tokens', () => {
+describe('Lexer', () => {
   it('should analyze normal HTML tags', () => {
     let html = `<div show class="classname" style='{ display: none; }'>1 + 1 > 2</div>`;
     let tokens = lexer.analyze(html)[0];
