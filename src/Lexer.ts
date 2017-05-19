@@ -4,7 +4,7 @@ export default class Lexer {
   constructor() {
     this.symbols = ['"', "'", '<', '>', '/'];
     this.grammar = [
-      { token: 'self-closing-tag', rule: /<([a-zA-Z])+\s*([^<>"']|"[^"]*"|'[^']*')*?\s*\/>/ },
+      { token: 'self-closing-tag', rule: /(<([a-zA-Z])+\s*([^<>"']|"[^"]*"|'[^']*')*?\s*\/>)|(<!DOCTYPE .*>)/ },
       { token: 'start-tag', rule: /<([a-zA-Z])+\s*([^<>"']|"[^"]*"|'[^']*')*?\s*>/ },
       { token: 'end-tag', rule: /<\/([a-zA-Z])+\s*>/ },
       { token: 'comment', rule: /<!--.+?-->/ },
@@ -14,7 +14,7 @@ export default class Lexer {
   }
 
   analyze(str: string) {
-    const lines: Array<string> = str.split('\n');
+    const lines: Array<string> = str.split(/[\t\f\r\n]/);
     return lines.map(line => this.analyzeLine(line));
   }
 

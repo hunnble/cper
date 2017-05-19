@@ -51,6 +51,13 @@ describe('Lexer', () => {
     expect(tokens[0]['string']).to.equal(html.trim());
   });
 
+  it('should analyze DOCTYPE', () => {
+    let html = '<!DOCTYPE html>';
+    let tokens = lexer.analyze(html)[0];
+    expect(tokens.length).to.equal(1);
+    expect(tokens[0]['token']).to.equal('self-closing-tag');
+  });
+
   it('should get comments', () => {
     const html = '<!-- useless words -->';
     const tokens = lexer.analyze(html)[0];

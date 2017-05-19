@@ -31,7 +31,7 @@ export default class Parser {
   }
 }
 
-class Stack {
+export class Stack {
   stack: Array<Node>
   constructor() {
     this.stack = [];

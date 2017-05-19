@@ -8,9 +8,15 @@ const parser = new Parser();
 
 describe('Parser', () => {
   it('parse tokens', () => {
-    const html = '<div>cat!</div>';
-    const tokens = lexer.analyze(html);
-    const treeRoot = parser.parse(tokens);
-    console.log(treeRoot);
+    let html = '<div>cat!</div>';
+    let tokens = lexer.analyze(html);
+    let treeRoot = parser.parse(tokens);
+    expect(treeRoot.isString).to.be.false;
+    expect(treeRoot.children.length).to.equal(1);
+
+    html = `<!DOCTYPE>\n<html>\n<body>\n<a href="hunnble.github.io">blog</a>\n</body>\n</html>`;
+    tokens = lexer.analyze(html);
+    treeRoot = parser.parse(tokens);
+    expect(treeRoot.children.length).to.equal(2);
   })
 });
